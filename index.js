@@ -98,9 +98,20 @@ function validChar(c) {
   return (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9');
 }
 
+function breakIdentifier (str) {
+  str = (str || '').replace(/[^0-9A-Z]/gi, '').toUpperCase();
+  return {
+    identifierScheme: str.substr(0, 2),
+    issuerCode: str.substr(2, 5),
+    releaseNumber: str.substr(7, 10),
+    checkCharacter: str.substr(17, 1)
+  };
+}
+
 module.exports = {
   validChar,
   toChar,
   toNumber,
-  checkChar
+  checkChar,
+  breakIdentifier
 }
