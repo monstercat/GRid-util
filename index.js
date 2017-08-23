@@ -13,7 +13,7 @@ function checkChar(string) {
   if (((sValue + pMod37) % 36) !== 1) {
     throw Error('Something unexpected happened.');
   }
-  return toChar(sValue);
+  return toChar(sValue % 36);
 }
 
 /**
