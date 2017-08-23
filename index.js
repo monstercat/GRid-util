@@ -8,11 +8,7 @@ function checkChar(string) {
   }
   const pValue = p(string, 18);
   const pMod37 = pValue % 37;
-  // The Check Character a1 must be computed so that S18||36 = 1.
-  // solve for x
-  // (pMod37 + x - 1) % 36 = 0
-  // or
-  // (pMod37 + x) % 36 = 1
+  // The Check Character a1 must be computed so that S18%36 = 1.
   const sValue = 36 - pMod37 + 1;
   if (((sValue + pMod37) % 36) !== 1) {
     throw Error('Something unexpected happend.');
@@ -21,7 +17,7 @@ function checkChar(string) {
 }
 
 /**
- * Converts A-Z as 10-35. 0-10 is as is.
+ * Converts GRid character to a number. [A-Z] => 10-35. [0-9] => [0-9]
  *
  * @return {Integer}
  */
@@ -39,7 +35,7 @@ function toNumber(c) {
 /**
  * Converts 0-35 to '0'-'9' or 'A'-'Z'
  *
- * @return {Integer}
+ * @return {String}
  */
 function toChar(n) {
   if (n < 0 || n > 35) {
@@ -49,6 +45,20 @@ function toChar(n) {
     return String.fromCharCode('0'.charCodeAt(0) + n);
   }
   return String.fromCharCode('A'.charCodeAt(0) + n - 10);
+}
+
+/*
+ * Returns valid ddex character numeric value.
+ */
+function randomValidNumber() {
+  return Math.floor(Math.random() * 36);
+}
+
+/*
+ * Returns valid ddex character.
+ */
+function randomValidChar() {
+  return toChar(randomValidNumber());
 }
 
 /**
@@ -81,11 +91,11 @@ function s(string, index) {
   return (p(string, index) % 37) + toNumber(string[index-1]);
 }
 
+/**
+ * Checks if character is valid GRid character.
+ */
 function validChar(c) {
-  if (typeof c == 'undefined') {
-    return false;
-  }
-  if (c == null) {
+  if (typeof c == 'undefined' || c == null) {
     return false;
   }
   if (typeof c == 'number') {
@@ -113,5 +123,7 @@ module.exports = {
   toChar,
   toNumber,
   checkChar,
-  breakIdentifier
+  breakIdentifier,
+  randomValidNumber,
+  randomValidChar
 }
