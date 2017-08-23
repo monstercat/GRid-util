@@ -11,7 +11,7 @@ function checkChar(string) {
   // The Check Character a1 must be computed so that S18%36 = 1.
   const sValue = 36 - pMod37 + 1;
   if (((sValue + pMod37) % 36) !== 1) {
-    throw Error('Something unexpected happend.');
+    throw Error('Something unexpected happened.');
   }
   return toChar(sValue);
 }
@@ -118,6 +118,19 @@ function breakIdentifier (str) {
   };
 }
 
+/**
+ * Generates a random GRid.
+ *
+ * @param {String} identifier - 2 character GRid identifier.
+ * @param {String} issuer - 5 character GRid issuer.
+ * @return {String} GRid
+ */
+function generate(identifier, issuer) {
+  const releaseNumber = Array(10).fill(0).map(randomValidChar).join('');
+  const grid = `${identifier}${issuer}${releaseNumber}`;
+  return grid + checkChar(grid);
+}
+
 module.exports = {
   validChar,
   toChar,
@@ -125,5 +138,6 @@ module.exports = {
   checkChar,
   breakIdentifier,
   randomValidNumber,
-  randomValidChar
+  randomValidChar,
+  generate
 }
